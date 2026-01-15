@@ -1,6 +1,8 @@
 package String;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class STR {
     public boolean isPalindrome(String s) {
@@ -58,6 +60,43 @@ public class STR {
         }
 
         return result == Integer.MAX_VALUE ? -1 : result;
+    }
+
+    public int lengthOfLongestSubstring(String s) {
+        /*
+         * Imp
+         * Given a string s, find the length of the longest substring without duplicate
+         * characters.
+         * 
+         * 
+         * 
+         * Example 1:
+         * 
+         * Input: s = "abcabcbb"
+         * Output: 3
+         * Explanation: The answer is "abc", with the length of 3. Note that "bca" and
+         * "cab" are also correct answers.
+         */
+        int left = 0, right = 0;
+
+        int count = 0;
+
+        HashSet<Character> set = new HashSet<>();
+
+        while (right < s.length()) {
+            char ch = s.charAt(right);
+
+            while (set.contains(ch)) {
+                set.remove(s.charAt(left));
+                left++;
+            }
+
+            set.add(s.charAt(right));
+            count = Math.max(count, right - left + 1);
+            right++;
+        }
+
+        return count;
     }
 
     public static void main(String[] args) {
