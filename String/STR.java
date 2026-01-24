@@ -1,8 +1,8 @@
 package String;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Stack;
 
 public class STR {
     public boolean isPalindrome(String s) {
@@ -67,11 +67,7 @@ public class STR {
          * Imp
          * Given a string s, find the length of the longest substring without duplicate
          * characters.
-         * 
-         * 
-         * 
          * Example 1:
-         * 
          * Input: s = "abcabcbb"
          * Output: 3
          * Explanation: The answer is "abc", with the length of 3. Note that "bca" and
@@ -99,7 +95,48 @@ public class STR {
         return count;
     }
 
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                stack.push(')');
+            } else if (c == '[') {
+                stack.push(']');
+            } else if (c == '{') {
+                stack.push('}');
+            } else if (stack.isEmpty() || stack.pop() != c) {
+                return false;
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public static int compress(char[] chars) {
+        int n = chars.length;
+        int ans = 0;
+
+        for (int i = 0; i < n;) {
+            char ch = chars[i];
+            int count = 0;
+
+            while (i < n && chars[i] == ch) {
+                count++;
+                i++;
+            }
+
+            chars[ans++] = ch;
+
+            if (count > 1) {
+                for (char c : String.valueOf(count).toCharArray()) {
+                    chars[ans++] = c;
+                }
+            }
+        }
+        return ans;
+    }
+
     public static void main(String[] args) {
-        System.out.println(firstUniqChar("leetcode"));
+        System.out.println(compress(new char[] { 'a', 'a', 'b', 'b', 'c', 'c', 'c' }));
     }
 }
